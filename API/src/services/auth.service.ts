@@ -1,6 +1,9 @@
+import { sign } from "jsonwebtoken";
+import { Auth } from "../interfaces/auth.interface";
 import { User } from "../interfaces/user.interface";
 import UserModel from "../models/user.model";
-import { encrypto } from "../utils/password.handle";
+import { encrypto, verified } from "../utils/password.handle";
+import { signToken } from "../utils/jwt.handle";
 
 
 const registerNewUser = async ({name, user, password, email, phone_number}:User)=>{
@@ -12,4 +15,19 @@ const registerNewUser = async ({name, user, password, email, phone_number}:User)
     return registerNewUser
 }
 
-export {registerNewUser};
+const loginUser = async({user, password}:Auth)=>{
+    const chekIs = await UserModel.findOne({user});
+    if(!chekIs) return "USER_NOT_FOUND";
+    const passHash = chekIs.password;
+    const isCorrect = await verified(password, passHash);
+
+    if(!isCorrect) return "CREDENTIALS_INVALID";
+    const token = signToken(chekIs.user);
+    const data ={
+        token,
+    }
+    
+    return data;
+}
+
+export {registerNewUser, loginUser};

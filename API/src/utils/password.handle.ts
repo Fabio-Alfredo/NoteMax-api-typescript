@@ -1,4 +1,4 @@
-import { hash } from "bcryptjs"
+import { compare, hash } from "bcryptjs"
 
 
 const encrypto = async(pass:string)=>{
@@ -6,4 +6,9 @@ const encrypto = async(pass:string)=>{
     return passHash
 }
 
-export{encrypto}
+const verified=async (pass:string, passHash:string)=>{
+    const isCorrect = await compare(pass, passHash);
+    return isCorrect;
+}
+
+export{encrypto, verified}
