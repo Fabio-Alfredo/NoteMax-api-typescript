@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import { handleHttp } from "../utils/error.handle"
-import { getNotes } from "../services/notes.service";
+import { getNotes, postNotes } from "../services/notes.service";
 
 const getNotesController = async (req: Request, res: Response) => {
     try {
@@ -11,5 +11,14 @@ const getNotesController = async (req: Request, res: Response) => {
     }
 }
 
+const postNotesController = async ({body}: Request, res: Response) => {
+    try{
+        const response = await postNotes(body);
+        res.send(response);
+    }catch(e){
+        handleHttp(res, "ERROR_NOTE", e)
+    }
+}
 
-export {getNotesController};
+
+export { getNotesController, postNotesController};

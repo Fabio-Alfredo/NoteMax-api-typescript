@@ -13,6 +13,7 @@ const NotesSchema = new Schema<Notes>(
         },
         type:{
             type:String,
+            enum:['draft', 'math', 'social', 'friends'],
             required:true
         }
     },

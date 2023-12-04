@@ -1,3 +1,4 @@
+import { Notes } from "../interfaces/notes.interface";
 import NotesModel from "../models/note.models"
 
 
@@ -8,4 +9,9 @@ const getNotes = async () => {
     return data;
 }
 
-export {getNotes};
+const postNotes = async (note:Notes)=>{
+    const responseNotes = await NotesModel.create(note);
+    return responseNotes;
+}
+
+export {getNotes, postNotes};
