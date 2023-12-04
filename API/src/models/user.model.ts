@@ -22,6 +22,11 @@ const UserSchema = new Schema<User>(
         phone_number:{
             type:Number,
             required:true
+        },
+        role:{
+            type:String,
+            enum:["user", "admin","superadmin"],
+            default:"user"
         }
     },
     {

@@ -6,4 +6,5 @@ export interface User extends Auth {
     password:string;
     email:string;
     phone_number:number;
+    role:string;
 }
