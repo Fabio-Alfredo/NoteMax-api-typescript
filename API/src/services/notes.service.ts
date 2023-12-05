@@ -19,4 +19,8 @@ const deleteNotes = async (id:string)=>{
     return responseNotes;
 }
 
-export {getNotes, postNotes, deleteNotes};
+const updateNotes = async (id:string, note:Notes)=>{
+    const responseNotes = await NotesModel.updateOne({_id:id}, note);
+    return responseNotes;
+}
+export {getNotes, postNotes, deleteNotes, updateNotes};
