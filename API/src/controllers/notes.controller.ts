@@ -1,6 +1,7 @@
 import { Request, Response } from "express"
 import { handleHttp } from "../utils/error.handle"
-import { getNotes, postNotes } from "../services/notes.service";
+import { deleteNotes, getNotes, postNotes } from "../services/notes.service";
+import { Notes } from "../interfaces/notes.interface";
 
 const getNotesController = async (req: Request, res: Response) => {
     try {
@@ -11,14 +12,25 @@ const getNotesController = async (req: Request, res: Response) => {
     }
 }
 
-const postNotesController = async ({body}: Request, res: Response) => {
-    try{
-        const response = await postNotes(body);
-        res.send(response);
-    }catch(e){
+const postNotesController = async (req: Request, res: Response) => {
+    try {
+        const note: Notes = req.body as Notes;
+        await postNotes(note);
+        res.send("NOTE_CREATED");
+    } catch (e) {
         handleHttp(res, "ERROR_NOTE", e)
     }
 }
 
+const deleteNotesController = async ({ params }: Request, res: Response) => {
+    try {
+        const { id } = params
+        const response = await deleteNotes(id);
+        res.send(response);
+    } catch (e) {
+        handleHttp(res, "ERROR_DELETE_NOTE", e)
+    }
+}
 
-export { getNotesController, postNotesController};
+
+export { getNotesController, postNotesController, deleteNotesController };
