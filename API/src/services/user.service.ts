@@ -12,8 +12,13 @@ const getUsers = async ()=>{
     return responseUser;
 }
 
-const patchUser = async (id:string, newRole:string)=>{
+const patchUserRole = async (id:string, newRole:string)=>{
     const responseUser = await UserModel.updateOne({_id:id}, {$set:{role:newRole}})
+    return responseUser;
+}
+
+const patchUserPass = async (id:string, newPass:string)=>{
+    const responseUser = await UserModel.updateOne({_id:id}, {$set:{password:newPass}});
     return responseUser;
 }
 
@@ -24,4 +29,6 @@ const updateUser = async (id:string, user:Partial<User>)=>{
 }
 
 
-export{deleteUser, getUsers, patchUser, updateUser};
+
+
+export{deleteUser, getUsers, patchUserRole, updateUser, patchUserPass};
