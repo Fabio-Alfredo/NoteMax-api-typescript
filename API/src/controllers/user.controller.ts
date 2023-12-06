@@ -1,6 +1,7 @@
 import { Request, Response } from "express"
 import { handleHttp } from "../utils/error.handle"
-import { deleteUser, getUsers, patchUser } from "../services/user.service";
+import { deleteUser, getUsers, patchUser, updateUser } from "../services/user.service";
+import { updateNotes } from "../services/notes.service";
 
 const deleteUserController = async ({params}:Request, res:Response)=>{
     try{
@@ -32,4 +33,15 @@ const patchUserController = async (req:Request, res:Response)=>{
     }
 }
 
-export{deleteUserController, getUserController, patchUserController};
+const updateUserController = async (req:Request, res:Response)=>{
+    try{
+        const {id} = req.params
+        const user = req.body;
+        const response = await updateUser(id, user);
+        res.send(response);
+    }catch(e){
+        handleHttp(res, "ERROR_UPDATE", e);
+    }
+}
+
+export{deleteUserController, getUserController, patchUserController, updateUserController};

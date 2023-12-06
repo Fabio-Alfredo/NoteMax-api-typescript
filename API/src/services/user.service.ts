@@ -1,5 +1,6 @@
 import { response } from "express";
 import UserModel from "../models/user.model"
+import { User } from "../interfaces/user.interface";
 
 const deleteUser = async (id:string) => {
     const responseUser = await UserModel.deleteOne({_id:id});
@@ -16,5 +17,11 @@ const patchUser = async (id:string, newRole:string)=>{
     return responseUser;
 }
 
+const updateUser = async (id:string, user:Partial<User>)=>{
+    const responseUser = await UserModel.updateOne({_id:id}, user);
+    console.log(user);
+    return responseUser;  
+}
 
-export{deleteUser, getUsers, patchUser};
+
+export{deleteUser, getUsers, patchUser, updateUser};
