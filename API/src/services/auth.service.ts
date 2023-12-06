@@ -15,13 +15,14 @@ const registerNewUser = async ({name, user, password, email, phone_number}:User)
 }
 
 const loginUser = async({user, password}:Auth)=>{
+
     const chekIs = await UserModel.findOne({user});
     if(!chekIs) return "USER_NOT_FOUND";
     const passHash = chekIs.password;
     const isCorrect = await verified(password, passHash);
 
     if(!isCorrect) return "CREDENTIALS_INVALID";
-    const token = signToken(chekIs.user, chekIs.role);
+    const token = signToken(chekIs._id, chekIs.role);
     const data ={ 
         token,
     }

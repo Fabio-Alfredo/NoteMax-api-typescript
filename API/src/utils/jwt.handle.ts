@@ -2,14 +2,14 @@ import { sign, verify } from "jsonwebtoken"
 
 interface JwtPayload {
     role: string;
-    user: string;
+    id: string;
 
 }
 
 const JWT_SECRET = process.env.JWT_SECRET || "algobueno";
 
-const signToken = (user: string, role: string) => {
-    const jwt = sign({ user, role }, JWT_SECRET, {
+const signToken = (id: object, role: string) => {
+    const jwt = sign({ id, role }, JWT_SECRET, {
         expiresIn: "2h",
     })
     return jwt;

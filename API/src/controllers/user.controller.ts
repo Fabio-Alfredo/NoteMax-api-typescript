@@ -2,6 +2,8 @@ import { Request, Response } from "express"
 import { handleHttp } from "../utils/error.handle"
 import { deleteUser, getUsers, patchUserPass, patchUserRole, updateUser } from "../services/user.service";
 import { updateNotes } from "../services/notes.service";
+import { checkJwt } from "../middlewares/validateSesion.middlware";
+import { verifiedToken } from "../utils/jwt.handle";
 
 const deleteUserController = async ({ params }: Request, res: Response) => {
     try {
@@ -15,6 +17,8 @@ const deleteUserController = async ({ params }: Request, res: Response) => {
 
 const getUserController = async (req: Request, res: Response) => {
     try {
+
+
         const response = await getUsers();
         res.send(response);
     } catch (e) {
@@ -35,10 +39,17 @@ const patchUserRoleController = async (req: Request, res: Response) => {
 
 const patchUserPassController = async (req: Request, res: Response) => {
     try {
-        const { id } = req.params;
-        const pass = req.body.password;
-        const response = await patchUserPass(id, pass);
-        res.send(response);
+        const auth = req.headers.authorization || " ";
+        const token = auth.split(" ").pop();
+
+        if (token) {
+            const tokenData = await verifiedToken(token);
+            const id = tokenData.id;
+            const pass = req.body.password;
+            const response = await patchUserPass(id, pass);
+            res.send(response);
+        }
+
     } catch (e) {
         handleHttp(res, "ERROR_NEW_DATA", e);
     }
@@ -47,10 +58,16 @@ const patchUserPassController = async (req: Request, res: Response) => {
 
 const updateUserController = async (req: Request, res: Response) => {
     try {
-        const {id} = req.params
-        const user = req.body;
-        const response = await updateUser(id, user);
-        res.send(response);
+        const auth = req.headers.authorization || " ";
+        const token = auth.split(" ").pop();
+
+        if (token) {
+            const tokenData = await verifiedToken(token);
+            const id = tokenData.id;
+            const response = await updateUser(id, req.body);
+            res.send(response);
+        }
+    
     } catch (e) {
         handleHttp(res, "ERROR_UPDATE", e);
     }

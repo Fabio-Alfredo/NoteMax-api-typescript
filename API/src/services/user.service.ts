@@ -24,7 +24,6 @@ const patchUserPass = async (id:string, newPass:string)=>{
 
 const updateUser = async (id:string, user:Partial<User>)=>{
     const responseUser = await UserModel.updateOne({_id:id}, user);
-    console.log(user);
     return responseUser;  
 }
 
