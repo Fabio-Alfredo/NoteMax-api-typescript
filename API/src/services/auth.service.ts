@@ -21,8 +21,8 @@ const loginUser = async({user, password}:Auth)=>{
     const isCorrect = await verified(password, passHash);
 
     if(!isCorrect) return "CREDENTIALS_INVALID";
-    const token = signToken(chekIs.user);
-    const data ={
+    const token = signToken(chekIs.user, chekIs.role);
+    const data ={ 
         token,
     }
     

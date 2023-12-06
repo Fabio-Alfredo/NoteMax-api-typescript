@@ -1,14 +1,26 @@
-import { sign, verify} from "jsonwebtoken"
+import { sign, verify } from "jsonwebtoken"
+
+interface JwtPayload {
+    role: string;
+    user: string;
+
+}
 
 const JWT_SECRET = process.env.JWT_SECRET || "algobueno";
 
-const signToken=(user:string)=>{
-    const jwt =sign({user}, JWT_SECRET,{
-        expiresIn : "2h",
+const signToken = (user: string, role: string) => {
+    const jwt = sign({ user, role }, JWT_SECRET, {
+        expiresIn: "2h",
     })
     return jwt;
 };
 
-export {signToken};
+const verifiedToken = (token: string) => {
+
+    const isOk = verify(token, JWT_SECRET) as JwtPayload;
+    return isOk;
+}
+
+export { signToken, verifiedToken };
 
 

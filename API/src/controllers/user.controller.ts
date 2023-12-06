@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import { handleHttp } from "../utils/error.handle"
-import { deleteUser, getUsers } from "../services/user.service";
+import { deleteUser, getUsers, patchUser } from "../services/user.service";
 
 const deleteUserController = async ({params}:Request, res:Response)=>{
     try{
@@ -21,4 +21,15 @@ const getUserController = async (req:Request, res:Response)=>{
     }
 }
 
-export{deleteUserController, getUserController};
+const patchUserController = async (req:Request, res:Response)=>{
+    try{
+        const {id} = req.params;
+        const info = req.body.role;
+        const response = await patchUser(id, info);
+        res.send(response);
+    }catch(e){
+        handleHttp(res, "ERROR_PATCH", e)
+    }
+}
+
+export{deleteUserController, getUserController, patchUserController};

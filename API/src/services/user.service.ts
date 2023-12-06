@@ -11,4 +11,10 @@ const getUsers = async ()=>{
     return responseUser;
 }
 
-export{deleteUser, getUsers};
+const patchUser = async (id:string, newRole:string)=>{
+    const responseUser = await UserModel.updateOne({_id:id}, {$set:{role:newRole}})
+    return responseUser;
+}
+
+
+export{deleteUser, getUsers, patchUser};
