@@ -8,7 +8,7 @@ const deleteUser = async (id:string) => {
 }
 
 const getUsers = async ()=>{
-    const responseUser = await UserModel.find({});
+    const responseUser = await UserModel.find({}).select('name email');
     return responseUser;
 }
 

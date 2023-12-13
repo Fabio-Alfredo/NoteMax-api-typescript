@@ -17,8 +17,6 @@ const deleteUserController = async ({ params }: Request, res: Response) => {
 
 const getUserController = async (req: Request, res: Response) => {
     try {
-
-
         const response = await getUsers();
         res.send(response);
     } catch (e) {

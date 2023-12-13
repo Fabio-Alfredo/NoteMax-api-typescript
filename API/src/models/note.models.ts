@@ -3,6 +3,7 @@ import { Notes } from "../interfaces/notes.interface";
 
 const NotesSchema = new Schema<Notes>(
     {
+
         title:{
             type:String,
             required:true
@@ -15,7 +16,12 @@ const NotesSchema = new Schema<Notes>(
             type:String,
             enum:['draft', 'math', 'social', 'friends'],
             required:true
-        }
+        },
+        id_user:{
+            type:String,
+            required:true
+        },
+
     },
     {
         timestamps:true,

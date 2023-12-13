@@ -10,7 +10,7 @@ const getNotes = async () => {
 }
 
 const postNotes = async (note:Notes)=>{
-    const responseNotes = await NotesModel.create(note);
+    const responseNotes = await NotesModel.create(note)
     return responseNotes;
 }
 
@@ -23,4 +23,9 @@ const updateNotes = async (id:string, note:Notes)=>{
     const responseNotes = await NotesModel.updateOne({_id:id}, note);
     return responseNotes;
 }
-export {getNotes, postNotes, deleteNotes, updateNotes};
+
+const getNotesUser = async (user_id:string)=>{
+    const responseNotes = await NotesModel.find({id_user:user_id});
+    return responseNotes;
+}
+export {getNotes, postNotes, deleteNotes, updateNotes, getNotesUser};
