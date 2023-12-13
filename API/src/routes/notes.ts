@@ -7,7 +7,7 @@ const router = Router();
 
 router.get('/', checkJwt, checkRole(['admin', 'superadmin']), getNotesController);
 router.get('/user', getNotesUserController);
-router.post('/', postNotesController);
+router.post('/',checkJwt, postNotesController);
 router.delete('/:id', deleteNotesController);
 router.put('/:id', updateNotesController);
 

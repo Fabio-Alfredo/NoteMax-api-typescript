@@ -9,6 +9,6 @@ router.delete('/:id', checkJwt, checkRole(['admin', 'superadmin']), deleteUserCo
 router.get('/', checkJwt, checkRole(['admin', 'superadmin']), getUserController);
 router.patch('/:id', checkRole(['superadmin']), patchUserRoleController);
 router.put('/', checkJwt, updateUserController);
-router.patch('/pass/:id', checkJwt, patchUserPassController);
+router.patch('/pass', checkJwt, patchUserPassController);
 
 export { router };
